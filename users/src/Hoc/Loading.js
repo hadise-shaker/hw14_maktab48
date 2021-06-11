@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import animated from "./loading.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Loading(WrappedComponent, api) {
   const LoadingComponent = (props) => {
     const [isLoading, setLoading] = useState(true);
@@ -7,8 +9,8 @@ function Loading(WrappedComponent, api) {
     useEffect(() => {
       fetch(api)
         .then((response) => response.json())
+        .catch((err) => toast.error(err))
         .then((json) => {
-          /* console.log(json); */
           setLoading(false);
           setData(json);
         });

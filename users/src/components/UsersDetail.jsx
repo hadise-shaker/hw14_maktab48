@@ -12,6 +12,8 @@ import spacing  from '@material-ui/system';
 import {Link} from "react-router-dom"
 import Grid from '@material-ui/core/Grid';
 import flash from "./flash.svg"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const CardDetail = () => {
     const inputElement = useRef(null);
 
@@ -25,8 +27,8 @@ const CardDetail = () => {
     useEffect(()=>{
         fetch(`https://60bf8aba97295a0017c432ab.mockapi.io/users/${id}`)
         .then(response=>response.json())
-        .then(data=>setData(data))
-        .catch(error=> console.log(error))
+        .then(data=>{setData(data); toast.success("succes")})
+        .catch(error=>toast.error(error))
         },[])
     return (
         <Grid container>

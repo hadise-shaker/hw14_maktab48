@@ -8,7 +8,10 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import { useHistory } from 'react-router';
+
 import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const MyTable = ({id}) => {
   const history = useHistory();
     const StyledTableCell = withStyles((theme) => ({
@@ -50,12 +53,21 @@ const MyTable = ({id}) => {
     getData();
   }, []);
   const fetchData = async () => {
-    const response = await fetch(
-        `https://60bf8aba97295a0017c432ab.mockapi.io/users/${id}`
-    );
-    console.log(response);
-    const data = await response.json();
-    return data;
+    try{   
+       const response = await fetch(
+      `https://60bf8aba97295a0017c432ab.mockapi.io/users/${id}`
+  );
+  console.log(response);
+ 
+  const data = await response.json();
+  toast.success("suspsk")
+  return data;
+}catch(err){
+toast.error("error")
+}finally{
+  toast.success("succsess")
+}
+
   };
     return (
 
