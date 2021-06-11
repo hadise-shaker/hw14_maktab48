@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Loading from "./Loading";
 
 import "../App.css";
@@ -29,14 +29,13 @@ function Users({ data, ...props }) {
     table: {
       minWidth: 700,
     },
-    tableContainer:{
-      width:"50%",
-      margin:"auto",
-
+    tableContainer: {
+      width: "50%",
+      margin: "auto",
     },
-    head:{
-      backgroundColor:"blue",
-    }
+    head: {
+      backgroundColor: "blue",
+    },
   });
   const classes = useStyles();
   return (

@@ -34,7 +34,11 @@ const MyTable = ({id}) => {
         },
         bg:{
           color: "blue"
+        },
+        cursor:{
+          cursor: "pointer",
         }
+        
       });
       const classes = useStyles();
          const [data, setData] = useState([]);
@@ -55,7 +59,7 @@ const MyTable = ({id}) => {
   };
     return (
 
-             <StyledTableRow id={id} onClick={()=> {history.push(`/${id}`)}} >
+             <StyledTableRow id={id} onClick={()=> {history.push(`/${id}`)}} className={classes.cursor} >
 
                 <StyledTableCell align="right">
                   <img src={data.avatar} className="avatar" />

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect,useRef } from 'react'
 import { useParams } from 'react-router'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
@@ -13,6 +13,13 @@ import {Link} from "react-router-dom"
 import Grid from '@material-ui/core/Grid';
 import flash from "./flash.svg"
 const CardDetail = () => {
+    const inputElement = useRef(null);
+
+    useEffect(() => {
+      if (inputElement.current) {
+        inputElement.current.focus();
+      }
+    }, []);
     const {id}=useParams();
     const [data,setData]=useState({})
     useEffect(()=>{
@@ -66,6 +73,7 @@ const CardDetail = () => {
                 /> 
                     <label > company : </label>
                  <TextField className="main"
+                 inputRef={inputElement}
                 id="standard-read-only-input"
 
                 value={data.company}
