@@ -1,0 +1,30 @@
+.paper{
+    width: 50%;
+    margin: auto;
+}
+.img {
+    float: right;
+/*     padding: 15rem 5rem; */
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+}
+.form{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 35px;
+}
+.main{
+
+    width: 95%;
+    padding: 25px !important;
+
+}
+.link{
+    font-size: 26px;
+}
+.flash{
+    width:100px;
+    height:100px;
+}
