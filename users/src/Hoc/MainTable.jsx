@@ -1,21 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 import Loading from "./Loading";
-import Pagination from "@material-ui/lab/Pagination";
 import "../App.css";
 import TablePagination from "@material-ui/core/TablePagination";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
-
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-
 import Paper from "@material-ui/core/Paper";
 
-function Users({ data, ...props }) {
+const Users=({ data, ...props })=> {
   const history = useHistory();
   const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -62,14 +59,13 @@ function Users({ data, ...props }) {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-    console.log(page);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
-    console.log(rowsPerPage);
     setPage(0);
   };
+/*   console.log(props); */
   return (
     <Paper>
       <TablePagination
@@ -87,33 +83,32 @@ function Users({ data, ...props }) {
             <TableRow>
               <StyledTableCell align="right">#</StyledTableCell>
               <StyledTableCell align="right">photo</StyledTableCell>
-              <StyledTableCell align="right">first name</StyledTableCell>
               <StyledTableCell align="right">last name</StyledTableCell>
+              <StyledTableCell align="right">first name</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((user) => {
-                console.log(data);
                 return (
                   <StyledTableRow
                     key={user.id}
-                    onClick={() => {
-                      history.push(`/${user.id}`);
-                    }}
-                    className={classes.cursor}
+
+                   
                   >
                     <StyledTableCell align="right">{user.id}</StyledTableCell>
                     <StyledTableCell align="right">
                       <img src={user.avatar} className={classes.avatar} />
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {user.firstname}
+                    </StyledTableCell> 
+                    <StyledTableCell align="right"                     >
+                      {user.lastname}
                     </StyledTableCell>
 
-                    <StyledTableCell align="right">
-                      {user.lastname}
+                    <StyledTableCell align="right" onClick={() => {
+                      history.push(`/${user.id}`);
+                    }}  className={classes.cursor}>
+                      {user.firstname}
                     </StyledTableCell>
                   </StyledTableRow>
                 );

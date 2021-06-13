@@ -4,12 +4,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function Loading(WrappedComponent, api) {
   const LoadingComponent = (props) => {
+    console.log(props.history);
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     useEffect(() => {
       const fetchTasks = async () => {
         try {
-          const response = await fetch(api);
+          const response = await fetch(api + props.history.location.pathname);
 
           const data = await response.json();
           if (response.status !== 200) {

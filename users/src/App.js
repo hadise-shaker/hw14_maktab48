@@ -1,28 +1,21 @@
 import logo from "./logo.svg";
 import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import MainTable from "./Hoc/MainTable.jsx";
+import UsersDetail from "./components/UsersDetail";
+import NavBar from "./components/NavBar";
 
-import Body from "./components/Body";
 function App() {
-  /*   const [data, setData] = useState([]);
-  const getData = async () => {
-    const datasFromServer = await fetchData();
-    setData(datasFromServer);
-  };
-  useEffect(() => {
-    getData();
-  }, []);
-  const fetchData = async () => {
-    const response = await fetch(
-      "https://60bf8aba97295a0017c432ab.mockapi.io/users"
-    );
-    console.log(response);
-    const data = await response.json();
-    return data;
-  }; */
   return (
-    <div className="App">
-      <Body />
-    </div>
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route exact path="/" component={MainTable} />
+
+        <Route path="/:id" component={UsersDetail} />
+      </Switch>
+    </Router>
   );
 }
 

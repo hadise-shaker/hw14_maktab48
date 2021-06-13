@@ -13,44 +13,23 @@ import {Link} from "react-router-dom"
 import Grid from '@material-ui/core/Grid';
 import flash from "./flash.svg"
 import { ToastContainer, toast } from "react-toastify";
+import Loading from "../Hoc/Loading"
 import "react-toastify/dist/ReactToastify.css";
-const CardDetail = () => {
+const CardDetail = ({data,...props}) => {
     const inputElement = useRef(null);
-
+console.log(props.history);
     useEffect(() => {
       if (inputElement.current) {
         inputElement.current.focus();
       }
     }, []);
-    const {id}=useParams();
-    const [data,setData]=useState({})
-    const [err,setErr]=useState(true)
-    useEffect(()=>{
-        const fetchTasks = async () => {
-            try {
-              const response = await fetch(`https://60bf8aba97295a0017c432ab.mockapi.io/users/${id}`);
-    
-              const data = await response.json();
-              if (response.status !== 200) {
-                setErr(false)
-                toast.error("Request Failed");
-              } else {
-               
-                setData(data);
-    
-                toast.success("successful");
-              }
-            } catch (err) {
-              toast.error("Request Failed2");
-            }
-          };
-          fetchTasks()
-        },[])
+
+        
     return (
        
            <div>
                 <ToastContainer/>
-        {err&&<Grid container>
+        <Grid container>
             <Grid item xs={12}>
 
        
@@ -118,11 +97,14 @@ const CardDetail = () => {
             </Paper>
             </Grid>
             </Grid>
-        }
+        
         </div> 
 
        
     )
+   
 }
-
-export default CardDetail
+export default Loading(
+    CardDetail,
+    `https://60bf8aba97295a0017c432ab.mockapi.io/users/`
+  );
