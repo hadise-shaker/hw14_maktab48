@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 import Loading from "./Loading";
-
+import Pagination from "@material-ui/lab/Pagination";
 import "../App.css";
-
+import TablePagination from "@material-ui/core/TablePagination";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import Table from "@material-ui/core/Table";
@@ -57,41 +57,71 @@ function Users({ data, ...props }) {
     },
   });
   const classes = useStyles();
-  return (
-    <TableContainer component={Paper} className={classes.tableContainer}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead className={classes.head}>
-          <TableRow>
-            <StyledTableCell align="right">photo</StyledTableCell>
-            <StyledTableCell align="right">first name</StyledTableCell>
-            <StyledTableCell align="right">last name</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((user) => {
-            console.log(data);
-            return (
-              <StyledTableRow
-                key={user.id}
-                onClick={() => {
-                  history.push(`/${user.id}`);
-                }}
-                className={classes.cursor}
-              >
-                <StyledTableCell align="right">
-                  <img src={user.avatar} className={classes.avatar} />
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {user.firstname}
-                </StyledTableCell>
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-                <StyledTableCell align="right">{user.lastname}</StyledTableCell>
-              </StyledTableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+    console.log(page);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    console.log(rowsPerPage);
+    setPage(0);
+  };
+  return (
+    <Paper>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 15]}
+        component="div"
+        count={data.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+      <TableContainer component={Paper} className={classes.tableContainer}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead className={classes.head}>
+            <TableRow>
+              <StyledTableCell align="right">#</StyledTableCell>
+              <StyledTableCell align="right">photo</StyledTableCell>
+              <StyledTableCell align="right">first name</StyledTableCell>
+              <StyledTableCell align="right">last name</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((user) => {
+                console.log(data);
+                return (
+                  <StyledTableRow
+                    key={user.id}
+                    onClick={() => {
+                      history.push(`/${user.id}`);
+                    }}
+                    className={classes.cursor}
+                  >
+                    <StyledTableCell align="right">{user.id}</StyledTableCell>
+                    <StyledTableCell align="right">
+                      <img src={user.avatar} className={classes.avatar} />
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {user.firstname}
+                    </StyledTableCell>
+
+                    <StyledTableCell align="right">
+                      {user.lastname}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 }
 
