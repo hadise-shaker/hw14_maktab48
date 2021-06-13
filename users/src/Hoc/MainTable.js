@@ -14,7 +14,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
 import Paper from "@material-ui/core/Paper";
-import MyTable from "../components/MyTable";
 
 function Users({ data, ...props }) {
   const history = useHistory();
