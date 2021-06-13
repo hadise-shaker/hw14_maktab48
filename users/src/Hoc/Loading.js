@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useParams } from "react";
 import animated from "./loading.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,24 +7,26 @@ function Loading(WrappedComponent, api) {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     useEffect(() => {
-      fetch(api)
-        .then((response) => response.json())
-        .catch((err) => toast.error(err))
-        .then((json) => {
-          setLoading(false);
-          setData(json);
-        });
-    }, []);
+      const fetchTasks = async () => {
+        try {
+          const response = await fetch(api);
 
-    /*     function refetch() {
-      setLoading(false);
-      fetch(api)
-        .then((response) => response.json())
-        .then((json) => {
-          setLoading(false);
-          setData(json);
-        });
-    } */
+          const data = await response.json();
+          if (response.status !== 200) {
+            setLoading(false);
+            toast.error("Request Failed");
+          } else {
+            setLoading(false);
+            setData(data);
+
+            toast.success("successful");
+          }
+        } catch (err) {
+          toast.error("Request Failed");
+        }
+      };
+      fetchTasks();
+    }, []);
     if (isLoading) {
       return (
         <div style={{ margin: "auto" }}>
@@ -35,7 +37,10 @@ function Loading(WrappedComponent, api) {
       );
     } else {
       return (
-        <WrappedComponent /* refetch={refetch} */ data={data} {...props} />
+        <div>
+          <ToastContainer />
+          {data && <WrappedComponent data={data} {...props} />}
+        </div>
       );
     }
   };

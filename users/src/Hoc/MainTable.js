@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useHistory } from "react-router";
 import Loading from "./Loading";
 
 import "../App.css";
@@ -11,10 +12,12 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+
 import Paper from "@material-ui/core/Paper";
 import MyTable from "../components/MyTable";
 
 function Users({ data, ...props }) {
+  const history = useHistory();
   const StyledTableCell = withStyles((theme) => ({
     head: {
       backgroundColor: theme.palette.common.black,
@@ -24,6 +27,13 @@ function Users({ data, ...props }) {
       fontSize: 14,
     },
   }))(TableCell);
+  const StyledTableRow = withStyles((theme) => ({
+    root: {
+      "&:nth-of-type(odd)": {
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+  }))(TableRow);
 
   const useStyles = makeStyles({
     table: {
@@ -35,6 +45,16 @@ function Users({ data, ...props }) {
     },
     head: {
       backgroundColor: "blue",
+    },
+
+    bg: {
+      color: "blue",
+    },
+    cursor: {
+      cursor: "pointer",
+    },
+    avatar: {
+      borderRadius: "50%",
     },
   });
   const classes = useStyles();
@@ -50,7 +70,25 @@ function Users({ data, ...props }) {
         </TableHead>
         <TableBody>
           {data.map((user) => {
-            return <MyTable id={user.id} key={user.id}></MyTable>;
+            console.log(data);
+            return (
+              <StyledTableRow
+                key={user.id}
+                onClick={() => {
+                  history.push(`/${user.id}`);
+                }}
+                className={classes.cursor}
+              >
+                <StyledTableCell align="right">
+                  <img src={user.avatar} className={classes.avatar} />
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {user.firstname}
+                </StyledTableCell>
+
+                <StyledTableCell align="right">{user.lastname}</StyledTableCell>
+              </StyledTableRow>
+            );
           })}
         </TableBody>
       </Table>

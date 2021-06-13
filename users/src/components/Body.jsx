@@ -9,7 +9,7 @@ function Body() {
             <NavBar/>
             <Switch>
                 <Route exact path="/">
-                    <MainTable/>
+                    <MainTable  />
                 </Route>
                 <Route path="/:id">
                     <UsersDetail/>

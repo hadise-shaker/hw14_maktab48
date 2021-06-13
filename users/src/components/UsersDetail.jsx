@@ -24,17 +24,36 @@ const CardDetail = () => {
     }, []);
     const {id}=useParams();
     const [data,setData]=useState({})
+    const [err,setErr]=useState(true)
     useEffect(()=>{
-        fetch(`https://60bf8aba97295a0017c432ab.mockapi.io/users/${id}`)
-        .then(response=>response.json())
-        .then(data=>{setData(data); toast.success("succes")})
-        .catch(error=>toast.error(error))
+        const fetchTasks = async () => {
+            try {
+              const response = await fetch(`https://60bf8aba97295a0017c432ab.mockapi.io/users/${id}`);
+    
+              const data = await response.json();
+              if (response.status !== 200) {
+                setErr(false)
+                toast.error("Request Failed");
+              } else {
+               
+                setData(data);
+    
+                toast.success("successful");
+              }
+            } catch (err) {
+              toast.error("Request Failed2");
+            }
+          };
+          fetchTasks()
         },[])
     return (
-        <Grid container>
+       
+           <div>
+                <ToastContainer/>
+        {err&&<Grid container>
             <Grid item xs={12}>
 
-
+       
             <Grid item xs={12}><Link to={"/"} className="link"> <img src={flash} className="flash"/> </Link></Grid>
             
            <Paper className="paper" p={2} >
@@ -98,20 +117,11 @@ const CardDetail = () => {
                 </form>
             </Paper>
             </Grid>
+            </Grid>
+        }
+        </div> 
 
-{/*             <div>
-                <h1>name :{data.firstname}</h1>
-            </div>
-            <div>
-                <h1>phone :{data.phone}</h1>
-            </div>
-            <div>
-                 email :{data.email}
-            </div>
-            <div>
-                 company :{data.company}
-            </div> */}
-        </Grid>
+       
     )
 }
 
